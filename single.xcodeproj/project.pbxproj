@@ -365,7 +365,7 @@
 				ORGANIZATIONNAME = "Kat Digital Corp.";
 				TargetAttributes = {
 					3A435D85173E29C80085FF88 = {
-						DevelopmentTeam = 5D564Y297K;
+						DevelopmentTeam = X98G9M9FSP;
 					};
 				};
 			};
