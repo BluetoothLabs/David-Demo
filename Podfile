@@ -1,0 +1,7 @@
+platform :ios, '6.1'
+pod 'InAppSettingsKit',		'~> 2.0'
+pod 'JASidePanels', 		'~> 1.3.2'
+pod 'Reachability',  		'~> 3.1.1'
+pod 'AFNetworking', 		'~> 2.0.2'
+pod 'SVProgressHUD', 		'~> 1.0'
+pod 'MCSwipeTableViewCell',     '~> 1.1.1'
