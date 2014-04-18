@@ -10,7 +10,9 @@
 #import "MeterView.h"
 #import "MDBlueToothCenter.h"
 
-@interface MDCenterViewController : UIViewController
+@interface MDCenterViewController : UIViewController {
+    int max;
+}
 
 @property (nonatomic, retain) IBOutlet MeterView *RSSIView;
 @property (nonatomic, retain) MDBlueToothCenter *center;

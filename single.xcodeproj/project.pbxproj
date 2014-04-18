@@ -37,6 +37,7 @@
 		3AAA6AD618374E2700513747 /* MeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA6AD518374E2700513747 /* MeterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3AAA6ADB1837979300513747 /* MDCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AAA6ADA1837979300513747 /* MDCenterViewController.m */; };
 		3ABD1BE41743E072000C08D0 /* MySettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABD1BE31743E071000C08D0 /* MySettingsViewController.m */; };
+		3AD297861844E7AB00B9EE8E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AD297851844E7AB00B9EE8E /* AudioToolbox.framework */; };
 		D603BB52B3794E95850C315D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 613EBCF0AC1F471AA8E1599C /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,7 @@
 		3AAA6ADA1837979300513747 /* MDCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCenterViewController.m; sourceTree = "<group>"; };
 		3ABD1BE21743E071000C08D0 /* MySettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MySettingsViewController.h; path = single/MySettingsViewController.h; sourceTree = "<group>"; };
 		3ABD1BE31743E071000C08D0 /* MySettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MySettingsViewController.m; path = single/MySettingsViewController.m; sourceTree = "<group>"; };
+		3AD297851844E7AB00B9EE8E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		613EBCF0AC1F471AA8E1599C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6A49791BCD64167B4E28849 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -103,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AD297861844E7AB00B9EE8E /* AudioToolbox.framework in Frameworks */,
 				3AAA6AD118373D8F00513747 /* CoreBluetooth.framework in Frameworks */,
 				3A1035B217468114008C6AB7 /* CoreData.framework in Frameworks */,
 				3A435D8A173E29C80085FF88 /* UIKit.framework in Frameworks */,
@@ -214,6 +217,7 @@
 		3A435D88173E29C80085FF88 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3AD297851844E7AB00B9EE8E /* AudioToolbox.framework */,
 				3AAA6AD018373D8F00513747 /* CoreBluetooth.framework */,
 				3A1035B117468113008C6AB7 /* CoreData.framework */,
 				3A435D89173E29C80085FF88 /* UIKit.framework */,

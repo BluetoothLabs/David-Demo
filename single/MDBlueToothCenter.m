@@ -8,10 +8,14 @@
 
 #import "MDBlueToothCenter.h"
 
+
 @implementation MDBlueToothCenter
+
+# define READ_RSSI_INTERVAL 0.33
+
 static MDBlueToothCenter *instance = nil;
 static NSTimer *timer;
-
+static BOOL discoved = NO;
 NSString * const kMDDiscoverPeripheralRSSINotification = @"com.katdc.bluetooth.discoverPeripheralRSSI";
 NSString * const kObjectRSSI = @"objectRSSI";
 #pragma mark - singleton
@@ -32,7 +36,7 @@ NSString * const kObjectRSSI = @"objectRSSI";
         self.dicoveredPeripherals = [NSMutableArray new];
         manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
         supportBLE = NO;
-        isScanning = NO;
+        _isScanning = YES;
     }
     
     return self;
@@ -40,20 +44,14 @@ NSString * const kObjectRSSI = @"objectRSSI";
 
 
 -(void) startScan {
-    if (!isScanning) {
-        NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:TRUE], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
-        
-        [manager scanForPeripheralsWithServices:self.dicoveredPeripherals options:options];
-        isScanning = YES;
-    }
+    _isScanning = YES;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:TRUE], CBCentralManagerScanOptionAllowDuplicatesKey, nil];
+    
+    [manager scanForPeripheralsWithServices:nil options:options];
 }
 
 -(void) stopScan {
-    if (isScanning) {
-        [self stopTimer];
-        [manager stopScan];
-        isScanning = NO;
-    }
+    _isScanning = NO;
 }
 
 #pragma mark - CBCentralManagerDelegate
@@ -127,16 +125,22 @@ NSString * const kObjectRSSI = @"objectRSSI";
                                                         object:nil userInfo:userInfo];
     
    // When you have found a peripheral device that you’re interested in connecting to, stop scanning for other devices in order to save power.
-        
-//        [manager stopScan];
+    if (discoved) {
+        [manager stopScan];
+    }
 //    NSLog(@"Scanning stopped");
-    
+    discoved = YES;
+    firstPeripheral = peripheral;
     //
     
-    if(![self.dicoveredPeripherals containsObject:peripheral])
+    if(![self.dicoveredPeripherals containsObject:peripheral]) {
         [self.dicoveredPeripherals addObject:peripheral];
+    }
     
-    [manager retrievePeripheralsWithIdentifiers:@[peripheral.identifier]];
+    NSString *uuidString = [NSString stringWithFormat:@"%@", [[peripheral identifier] UUIDString]];
+    
+    NSLog(@"%@", uuidString);
+    [manager connectPeripheral:peripheral options:nil];
 }
 
 /*
@@ -162,35 +166,17 @@ NSString * const kObjectRSSI = @"objectRSSI";
 -(void) pingRSSI {
     if(firstPeripheral != nil) {
         [firstPeripheral readRSSI];
-        NSLog(@"-->%@",firstPeripheral.RSSI);
     }
 }
 
 - (void) startTimerAction {
-    timer = [NSTimer scheduledTimerWithTimeInterval: 5
+    timer = [NSTimer scheduledTimerWithTimeInterval: READ_RSSI_INTERVAL
                                                  target: self
                                                selector: @selector(pingRSSI)
                                                userInfo: nil
-                                                repeats: YES];
+                                                repeats: NO];
 }
 
-- (void) startTimer {
-    if (timer == NULL) {
-        // Start the long-running task and return immediately.
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            // Do the work associated with the task.
-            [self startTimerAction];
-        });
-    }
-}
-
-- (void) stopTimer {
-    if (timer != nil && [timer isValid]) {
-        [timer invalidate];
-        timer = nil;
-    }
-}
 /*
  Invoked whenever a connection is succesfully created with the peripheral.
  Discover available services on the peripheral
@@ -200,7 +186,7 @@ NSString * const kObjectRSSI = @"objectRSSI";
     NSLog(@"Did connect to peripheral: %@", peripheral);
     [peripheral setDelegate:self];
     [peripheral readRSSI];
-    [self startTimer];
+//    [self startTimerAction];
 }
 
 /*!
@@ -213,7 +199,7 @@ NSString * const kObjectRSSI = @"objectRSSI";
  */
 - (void)peripheralDidUpdateRSSI:(CBPeripheral *)peripheral error:(NSError *)error
 {
-    NSLog(@"peripheralDidUpdateRSSI:%@ error:%@", peripheral, [error localizedDescription]);
+//    NSLog(@"peripheralDidUpdateRSSI:%@ error:%@", peripheral, [error localizedDescription]);
     if(nil!=peripheral) {
         
         NSDictionary *userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -223,7 +209,9 @@ NSString * const kObjectRSSI = @"objectRSSI";
         [[NSNotificationCenter defaultCenter] postNotificationName:kMDDiscoverPeripheralRSSINotification
                                                             object:nil userInfo:userInfo];
     }
-    
+    if (_isScanning) {
+        [self startTimerAction];
+    }
 }
 
 @end

@@ -1,14 +1,9 @@
-for MIH Demo (project name:single)
+info.url0.singl is a HIM-Demo for BLE.
 ======
-v0.0.2 release
-=======
 
-BUILD:
-0. install cocoapods from http://cocoapods.org/
-1. then, run $pod install 
-2. and, open project with $open single.xcworkspace
-
-======
-v0.1 release notes
-======
-This demo will keep maintain as origin spec. New TapSwitch will make a new Project.
+TODO:
+1. 0XFFF1 write 1 to turn on device alarm.
+2. when out of range (let said 95), turn on device alarm and also 
+   turn on iphone alarm if in forground, and show notifcation to view on app.
+3. on-off guard is not correct so far.
+4. set range is not available.

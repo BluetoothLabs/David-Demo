@@ -17,6 +17,8 @@
 
 @implementation MDAppDelegate
 
+
+static BOOL flag = NO;
 @synthesize BLEcenter;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -55,33 +57,29 @@
         background_task = UIBackgroundTaskInvalid;
     }];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        //run the app without startUpdatingLocation. backgroundTimeRemaining decremented from 600.00
-//        [manager startUpdatingLocation];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        
+//        //run the app without startUpdatingLocation. backgroundTimeRemaining decremented from 600.00
+////        [manager startUpdatingLocation];
 //        [self startTimerAction];
-        
-        while(TRUE)
-        {
-            //backgroundTimeRemaining time does not go down.
-            
-            NSLog(@"Background time Remaining: %f",[[UIApplication sharedApplication] backgroundTimeRemaining]);
-            [NSThread sleepForTimeInterval:1]; //wait for 1 sec
-        }
-        
-        [application endBackgroundTask: background_task];
-        background_task = UIBackgroundTaskInvalid;
-    });
-}
-
-- (void) startTimerAction {
-    [BLEcenter stopTimer];
-    [BLEcenter startTimer];
+//        flag = YES;
+//        while(flag)
+//        {
+//            //backgroundTimeRemaining time does not go down.
+//            
+//            NSLog(@"Background time Remaining: %f",[[UIApplication sharedApplication] backgroundTimeRemaining]);
+//            [NSThread sleepForTimeInterval:1]; //wait for 1 sec
+//        }
+//        
+//        [application endBackgroundTask: background_task];
+//        background_task = UIBackgroundTaskInvalid;
+//    });
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    flag = NO;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

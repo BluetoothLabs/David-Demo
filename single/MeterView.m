@@ -43,8 +43,8 @@
 	CGContextSetStrokeColorWithColor(ctx, self.tintColor.CGColor);
 	CGContextSetLineWidth(ctx, self.width);
 	
-	CGFloat centerX = layer.frame.size.width / 2.0 + 3;
-	CGFloat centerY = layer.frame.size.height / 2.0 - 8;
+	CGFloat centerX = layer.frame.size.width / 2.0;// + 3;
+	CGFloat centerY = layer.frame.size.height / 2.0;// - 8;
 	
 	CGFloat ellipseRadius = self.width * 2.0;
 	
